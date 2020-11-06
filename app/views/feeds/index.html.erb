@@ -1,32 +1,30 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Feeds</h1>
+<div class="container">
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Image</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <ul class="row">
+      <li class="col-xs-3">Title</li>
+      <li class="col-xs-3">Content</li>
+      <li class="col-xs-3">Image</li>
+    </ul>
 
-  <tbody>
+
+
     <% @feeds.each do |feed| %>
-      <tr>
-        <td><%= feed.title %></td>
-        <td><%= feed.content %></td>
-        <td><%= feed.image %></td>
-        <td><%= feed.user.name %></td>
-        <td><%= link_to 'Show', feed %></td>
-        <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
-        <td><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <ul class="row">
+        <li class="col-xs-3"><%= feed.title %></li>
+        <li class="col-xs-3"><%= feed.content %></li>
 
+        <li class="col-xs-3"><%= feed.user.name %></li>
+
+        <li class="col-xs-1"><%= link_to 'Show', feed %></li>
+        <li class="col-xs-1"><%= link_to 'Edit', edit_feed_path(feed) %></li>
+        <li class="col-xs-1"><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    </ul>
+    <% end %>
+
+</div>
 <br>
 
 <%= link_to 'New Feed', new_feed_path %>
