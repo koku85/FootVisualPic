@@ -1,5 +1,6 @@
 class FeedsController < ApplicationController
   before_action :set_feed, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user, only: [:index]
 
   # GET /feeds
   # GET /feeds.json
@@ -72,6 +73,14 @@ class FeedsController < ApplicationController
   def set_feed
     @feed = Feed.find(params[:id])
   end
+
+  def authenticate_user
+     @current_user = User.find_by(id: session[:user_id])
+     if @current_user == nil
+       flash[:notice] = "ログインが必要です。"
+       redirect_to new_session_path
+     end
+   end
 
   def feed_params
     params.require(:feed).permit(:title, :content, :image, :image_cache)
