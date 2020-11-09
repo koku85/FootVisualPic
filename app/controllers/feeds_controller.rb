@@ -11,6 +11,7 @@ class FeedsController < ApplicationController
   # GET /feeds/1
   # GET /feeds/1.json
   def show
+
   end
 
   # GET /feeds/new
@@ -23,7 +24,8 @@ class FeedsController < ApplicationController
   end
 
   def confirm
-    @feed = current_user.feeds.build(feed_params)
+    @feed = Feed.new(feed_params)
+    @feed.user_id = current_user.id
     render :new if @feed.invalid?
   end
   # GET /feeds/1/edit
@@ -33,7 +35,8 @@ class FeedsController < ApplicationController
   # POST /feeds
   # POST /feeds.json
   def create
-    @feed = current_user.feeds.build(feed_params)
+    @feed = Feed.new(feed_params)
+    @feed.user_id = current_user.id
     if params[:back]
       render :new
     else
@@ -71,18 +74,18 @@ class FeedsController < ApplicationController
 
   private
   def set_feed
-    @feed = Feed.find(params[:id])
+  @feed = Feed.find(params[:id])
   end
 
   def authenticate_user
-     @current_user = User.find_by(id: session[:user_id])
-     if @current_user == nil
-       flash[:notice] = "ログインが必要です。"
-       redirect_to new_session_path
-     end
-   end
+  @current_user = User.find_by(id: session[:user_id])
+  if @current_user == nil
+  flash[:notice] = "ログインが必要です。"
+  redirect_to new_session_path
+  end
+  end
 
   def feed_params
-    params.require(:feed).permit(:title, :content, :image, :image_cache)
+  params.require(:feed).permit(:title, :content, :image, :image_cache)
   end
 end

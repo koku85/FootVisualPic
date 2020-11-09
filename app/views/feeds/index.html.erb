@@ -19,8 +19,10 @@
         <li class="col-xs-3"><%= feed.user.name %></li>
 
         <li class="col-xs-1"><%= link_to 'Show', feed %></li>
+      <% if feed.user_id == current_user.id %>
         <li class="col-xs-1"><%= link_to 'Edit', edit_feed_path(feed) %></li>
         <li class="col-xs-1"><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+      <% end %>
     </ul>
     <% end %>
 
