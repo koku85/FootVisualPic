@@ -9,4 +9,5 @@ class User < ApplicationRecord
   validates :image, presence: true
   has_many :feeds, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_many :favorite_feeds, through: :favorites, source: :feed
 end

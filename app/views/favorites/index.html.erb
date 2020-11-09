@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Favorites</h1>
+<div class="container">
+
+    <ul class="row">
+      <li class="col-xs-3">Title</li>
+      <li class="col-xs-3">Content</li>
+      <li class="col-xs-3">Contributor</li>
+    </ul>
+
+
+   <% unless @favorites.empty? %>
+    <% @favorites.each do |favorite| %>
+    <ul class="row">
+        <li class="col-xs-3"><%= favorite.feed.title %></li>
+        <li class="col-xs-3"><%= favorite.feed.content %></li>
+        <li class="col-xs-3"><%= image_tag favorite.feed.image.url %></li>
+        <li class="col-xs-3"><%= favorite.user.name %></li>
+        <li class="col-xs-3"><%= image_tag favorite.user.image.url %></li>
+    </ul>
+    <% end %>
+    <% else %>
+    <%= "このユーザはお気に入りした物がありません" %>
+  <% end %>
