@@ -41,6 +41,7 @@ class FeedsController < ApplicationController
       render :new
     else
       if @feed.save
+        ContactMailer.contact_mail(@feed).deliver
         redirect_to feeds_path, notice: "投稿を作成しました！"
       else
         render :new
@@ -74,18 +75,18 @@ class FeedsController < ApplicationController
 
   private
   def set_feed
-  @feed = Feed.find(params[:id])
+    @feed = Feed.find(params[:id])
   end
 
   def authenticate_user
-  @current_user = User.find_by(id: session[:user_id])
-  if @current_user == nil
-  flash[:notice] = "ログインが必要です。"
-  redirect_to new_session_path
-  end
+    @current_user = User.find_by(id: session[:user_id])
+    if @current_user == nil
+      flash[:notice] = "ログインが必要です。"
+      redirect_to new_session_path
+    end
   end
 
   def feed_params
-  params.require(:feed).permit(:title, :content, :image, :image_cache)
+    params.require(:feed).permit(:title, :content, :image, :image_cache)
   end
 end
