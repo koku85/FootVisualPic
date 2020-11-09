@@ -8,4 +8,5 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }
   validates :image, presence: true
   has_many :feeds, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 end
