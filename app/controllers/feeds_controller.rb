@@ -1,6 +1,7 @@
 class FeedsController < ApplicationController
   before_action :set_feed, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user, only: [:index]
+  before_action :correct_user, only: [:edit, :update, :destroy]
 
   def index
     @feeds = Feed.all
@@ -72,6 +73,13 @@ class FeedsController < ApplicationController
       flash[:notice] = "ログインが必要です。"
       redirect_to new_session_path
     end
+  end
+
+  def correct_user
+     if current_user.id != @feed.user_id
+       flash[:notice] = "権限がないです"
+       redirect_to feeds_path
+     end
   end
 
   def feed_params
