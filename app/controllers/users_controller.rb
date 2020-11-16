@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :edit, :update, :destroy]
+    before_action :correct_user, only: [:show, :edit, :update]
+
   def show
     @user = User.find(params[:id])
     @feeds = Feed.where(user_id: @user.id)
+    if @user != current_user
+      flash[:notice] = "権限がないです"
+      redirect_to feeds_path
+    end
   end
 
 
@@ -21,6 +27,10 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+    if @user != current_user
+      flash[:notice] = "権限がないです"
+      redirect_to feeds_path
+    end
   end
 
   def update
@@ -39,6 +49,11 @@ class UsersController < ApplicationController
   private
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    # redirect_to(show_users_url) unless @user == current_user
   end
 
   def user_params

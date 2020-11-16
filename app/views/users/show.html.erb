@@ -8,5 +8,6 @@
 <p>
 <%= link_to 'Favorites', user_favorites_path(@user) %>
 </p>
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<% if @user == current_user %>
+<%= link_to 'Edit', edit_user_path(@user) %>
+<% end %>
